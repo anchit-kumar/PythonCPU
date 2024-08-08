@@ -11,3 +11,5 @@ MemWriter.write()
 
 Alu = alu.Alu()
 Alu.start()
+
+Alu.writeArrayToFile()

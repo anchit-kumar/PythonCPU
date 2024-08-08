@@ -1,12 +1,12 @@
 import mem
 
 def to_eight_digit_binary(n):
-    binary_str = n[2:]
+    binary_str = bin(n)[2:]
     return binary_str.zfill(8)
 
 class Alu:
     memAccses = mem.Memory()
-    clock=0
+    clock=0 #Not Used
     PC = 0 #Decimal Value
     MAR = 0 #5 bit value
     MDR = 0 #8 bit value
@@ -44,7 +44,7 @@ class Alu:
                 case 2:
                     #print("HLT")
                     print("Program Halted Succsesfully")
-                    exit()
+                    break
                 case 3:
                     if(isinstance(Alu.ACC, str)):
                         Alu.ACC = int(Alu.ACC, 2)
@@ -79,3 +79,25 @@ class Alu:
                     #print("SUB")
                     Alu.MDR = memoryArray[int(Alu.MAR, 2)] #T3 RTL
                     Alu.ACC = Alu.ACC-int(Alu.MDR,2) #T4 RTLA
+    
+    def writeArrayToFile(self):
+        memoryArray = Alu.memAccses.memArray
+        
+        # Debug: Print memoryArray before conversion
+        #print("Before conversion to binary:", memoryArray)
+        
+        # Convert array to binary
+        for i in range(len(memoryArray)):
+            if(not isinstance(memoryArray[i], str)):
+                memoryArray[i] = to_eight_digit_binary(memoryArray[i])
+        
+        # Debug: Print memoryArray after conversion
+        #print("After conversion to binary:", memoryArray)
+        
+        with open("./mem/program.mem", "w") as program_mem:
+            for i in range(len(memoryArray)):
+                program_mem.write(memoryArray[i] + "\n")
+        
+        # Debug: Confirm file write completion
+        #print("Finished writing to program.mem")
+        program_mem.close()

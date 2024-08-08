@@ -20,3 +20,4 @@ class Memory:
     def clear(self):
         with open("./mem/program.mem", "w") as program_mem:
             pass
+        program_mem.close()
