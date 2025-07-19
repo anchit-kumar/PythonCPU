@@ -15,8 +15,11 @@ for line in asm_lines:
 
 #print(addrValStore)
 
+line_no =0
 with open('./mem/program.mem','a') as program_mem:
     for i in range(len(addrValStore)):
         program_mem.write(addrValStore[i]+"\n")
-
+        line_no += 1
+    for i in range(line_no,12):
+        program_mem.write("00000000\n")
 program_mem.close()
