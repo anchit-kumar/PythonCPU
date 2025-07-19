@@ -12,6 +12,7 @@ with open('./program.asm', 'r') as asm_file:
 asm_file.close
 
 machine_code = []
+line_no = 0
 for line in asm_lines:
     line = line.strip().split()
     if not line:
@@ -25,10 +26,16 @@ for line in asm_lines:
     except IndexError:
         binary.append(address[""])
     machine_code.append("".join(binary))
+    line_no += 1
+    if line[0] == 'HLT':
+        break
+        
 
 with open('./mem/program.mem', 'w') as program_mem:
     for code in machine_code:
         program_mem.write(f"{code}\n")
+    for i in range(line_no,14):
+        program_mem.write("00000000\n")
 program_mem.close()
 
 #print("Machine code has been written to ./mem/program.mem")
